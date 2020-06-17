@@ -1,19 +1,21 @@
 pipeline {
     agent {
-        docker { image 'jenkins' }
+        docker {
+            image 'gradle:4.7.0-jdk8-alpine'
+        }
     }
     stages {
         stage('Build') {
             steps {
-                sh 'gradle clean build'
+                echo 'Buliding.....'
+                sh 'gradle build'
+            }
+        }
+        stage('Test') {
+            steps {
+                echo 'Testing.....'
+                sh 'gradle test'
             }
         }
     }
-    stages {
-            stage('Test') {
-                steps {
-                    sh './gradlew test'
-                }
-            }
-        }
 }
